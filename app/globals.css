@@ -3291,10 +3291,45 @@ h4{
   height:100%;
   max-height:none;
 }
+.cg-hero-carousel{
+  display:flex;
+  width:100%;
+  min-height:0;
+  align-self:stretch;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+}
+.cg-hero-carousel-controls{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+}
+.cg-hero-carousel-controls button{
+  padding:7px 12px;
+  border:1px solid #304b61;
+  border-radius:999px;
+  background:#ffffffb8;
+  color:#304b61;
+  font:700 11px/1 var(--font-inter),Arial,sans-serif;
+  cursor:pointer;
+}
+.cg-hero-carousel-controls button.is-active{
+  background:#304b61;
+  color:#fff;
+}
+.cg-hero-carousel-controls button:focus-visible{
+  outline:2px solid #171814;
+  outline-offset:3px;
+}
 .cg-role-phone.device-phone-shell{
   --phone-radius:34px;
   width:100%;
   max-width:282px;
+  aspect-ratio:428/926;
+}
+.cg-role-phone-provider.device-phone-shell{
   aspect-ratio:428/926;
 }
 .cg-role-screens .cg-role-phone>img{
@@ -3303,6 +3338,17 @@ h4{
   height:100%;
   max-height:none;
   filter:none;
+}
+.cg-role-screens .cg-role-phone-provider>img{
+  object-fit:cover;
+  object-position:top;
+}
+@media(max-width:760px){
+  .cg-role-screens{grid-template-columns:1fr}
+  .cg-role-screens figure{width:min(100%,360px);justify-self:center}
+}
+@media(max-width:620px){
+  .cg-hero-carousel .cg-hero-phone{width:min(72%,158px)}
 }
 .cg-sharing-phone.device-phone-shell{
   --phone-radius:34px;
