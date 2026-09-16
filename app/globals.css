@@ -3254,6 +3254,12 @@ h4{
   --phone-radius:34px;
   --phone-notch-height:16px;
 }
+.demo-phone.device-phone-shell>.demo-sent{
+  width:86px;
+  height:auto;
+  object-fit:contain;
+  border-radius:0!important;
+}
 .demo-phone.device-phone-shell::before{z-index:8}
 .demo-phone.device-phone-shell::after{z-index:7}
 
