@@ -3265,6 +3265,7 @@ h4{
   --phone-notch-top:4px;
   --phone-notch-height:8px;
   --phone-notch-width:36%;
+  position:absolute;
   padding:0;
 }
 .printer-device-phone.device-phone-shell>img{border-radius:14px!important}
