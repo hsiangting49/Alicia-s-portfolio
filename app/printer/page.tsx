@@ -22,7 +22,7 @@ const projects = [
     description:
       "Designing a trustworthy AI assistant that supports independence and human connection.",
     visual: "elders",
-    href: "/",
+    href: "/printer/eldersconnect",
     tone: "coral",
   },
   {

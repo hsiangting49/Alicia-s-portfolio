@@ -6,8 +6,8 @@ const inter = Inter({ variable: '--font-inter', subsets: ['latin'] });
 const jacques = Jacques_Francois({ variable: '--font-jacques', subsets: ['latin'], weight: '400' });
 
 export const metadata: Metadata = {
-  title: 'EldersConnect — Alicia Lin',
-  description: 'A UX research and product design case study exploring trustworthy conversational AI for older adults.',
+  title: 'Hsiang-Ting Lin — Product Designer',
+  description: 'Selected UX research, product design, and AI workflow projects by Hsiang-Ting Lin.',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
