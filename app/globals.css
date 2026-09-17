@@ -2343,7 +2343,7 @@ h4{
 .cg-role-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:68px;margin-top:76px;align-items:center}
 .cg-role-layout .cg-system-preview{min-height:540px}
 .cg-role-list{display:grid}
-.cg-role-list article{display:grid;grid-template-columns:42px 1fr;gap:16px;padding:30px 0;border-bottom:1px solid var(--cg-line)}
+.cg-role-list article{display:grid;grid-template-columns:42px 1fr;gap:16px;padding:30px 0;border-bottom:1px solid var(--cg-line);align-content:start}
 .cg-role-list article:first-child{border-top:1px solid var(--cg-line)}
 .cg-role-list>article>span{font-size:12px;font-weight:800}
 .cg-role-list h3{margin-bottom:12px}
@@ -2403,7 +2403,7 @@ h4{
   .cg-control{padding-bottom:64px}.cg-handoff{padding-top:78px}
   .cg-hero-mockup{min-height:560px;padding:30px 18px 28px}.cg-hero-mockup img{max-width:84%;max-height:390px}
   .cg-process-grid{grid-template-columns:1fr;border-top:0}.cg-process-grid article{padding:24px 0 34px;border-top:1px solid var(--cg-line)}
-  .cg-role-layout .cg-system-preview{min-height:530px}.cg-role-list{grid-template-columns:1fr;gap:0}.cg-role-list article{grid-template-columns:40px 1fr;gap:12px}
+  .cg-role-layout .cg-system-preview{min-height:530px}.cg-role-list{grid-template-columns:1fr;gap:0}.cg-role-list article,.cg-role-list article:first-child{grid-template-columns:40px 1fr;gap:12px}
   .cg-role-screens{grid-template-columns:1fr;gap:78px;margin-inline:-18px;margin-top:78px;padding:70px 28px}.cg-role-screens img{height:auto;max-height:570px}
   .cg-provider-evidence{gap:30px;margin-top:78px;padding-top:30px}.cg-provider-evidence img{box-shadow:6px 6px 0 var(--cg-blue-strong)}
   .cg-sharing-evidence{grid-template-columns:1fr;gap:52px;margin-inline:-18px;padding:60px 28px}.cg-sharing-visual img{width:auto;max-width:100%;height:auto;max-height:610px}.cg-sharing-evidence figcaption h3{font-size:26px}
@@ -3368,21 +3368,39 @@ h4{
   max-height:none;
 }
 
-/* Keep the two permission directions legible as one connected idea. */
+/* Keep the two permission directions distinct, with an unfilled exchange
+   between them. Both labels and headings start at matching heights. */
 .cg-control-grid{
-  padding:34px 40px;
-  border-radius:10px;
+  grid-template-columns:minmax(0,1fr) 150px minmax(0,1fr);
+  gap:22px;
+  align-items:stretch;
+  padding:0;
+  background:transparent;
+}
+.cg-control-grid article{
+  display:flex;
+  flex-direction:column;
+  min-height:230px;
+  padding:30px;
+  border:0;
   background:var(--cg-blue);
+  box-shadow:none;
+}
+.cg-control-grid h3{
+  margin:44px 0 0;
+}
+.cg-control-link{
+  align-self:center;
 }
 @media(max-width:980px){
-  .cg-control-grid{gap:0;padding:30px 34px}
-  .cg-control-grid article{padding:20px 0 28px}
-  .cg-control-grid h3{margin-top:22px}
-  .cg-control-link{padding:12px 0 18px}
+  .cg-control-grid{grid-template-columns:1fr;gap:0}
+  .cg-control-grid article{min-height:0;padding:28px 30px 34px}
+  .cg-control-grid h3{margin-top:32px}
+  .cg-control-link{padding:22px 0}
 }
 
 @media(max-width:620px){
-  .cg-control-grid{padding:22px 24px}
+  .cg-control-grid article{padding:24px}
   .ec-case-hero-phone.device-phone-shell{
     --phone-radius:28px;
     width:175px;
@@ -3428,7 +3446,7 @@ h4{
 .printer-project-image[class*="printer-project-visual-"],
 .hr-case :is(.hr-case-hero-visual,.hr-case-metrics,.hr-case-example,.hr-case-opportunity,.hr-case-time,.hr-case-ownership,.hr-case-ai-callout,.hr-case-flow-compare li,.hr-case-impact-grid li,.hr-case-future-steps li,.hr-case-merge-graphic,.hr-case-anomaly-graphic),
 .ec-case :is(.ec-case-hero-visual,.ec-case-question,.ec-case-opportunities article,.ec-case-research-grid article,.ec-case-wireframes,.ec-case-study-stats div,.ec-case-scenarios article,.ec-case-reflection-note),
-.cg-case :is(.cg-hero-mockup,.cg-system-preview,.cg-before-after article,.cg-map-board,.cg-role-screens,.cg-source-card,.cg-view-stack article,.cg-principle,.cg-control-grid,.cg-sharing-evidence,.cg-handoff-grid .cg-engineering-card,.cg-alignment-note){
+.cg-case :is(.cg-hero-mockup,.cg-system-preview,.cg-before-after article,.cg-map-board,.cg-role-screens,.cg-source-card,.cg-view-stack article,.cg-principle,.cg-control-grid article,.cg-sharing-evidence,.cg-handoff-grid .cg-engineering-card,.cg-alignment-note){
   border-radius:10px!important;
 }
 
