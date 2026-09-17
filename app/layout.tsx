@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Jacques_Francois } from 'next/font/google';
+import ContentsquareTracking from './contentsquare-tracking';
 import './globals.css';
 
 const inter = Inter({ variable: '--font-inter', subsets: ['latin'] });
@@ -11,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={`${inter.variable} ${jacques.variable}`}>{children}</body></html>;
+  return <html lang="en"><body className={`${inter.variable} ${jacques.variable}`}>{children}<ContentsquareTracking /></body></html>;
 }
