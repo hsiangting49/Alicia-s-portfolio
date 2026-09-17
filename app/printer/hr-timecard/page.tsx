@@ -187,7 +187,7 @@ export default function HrTimecardCaseStudy() {
 
       <nav className="hr-case-return-nav" aria-label="Return to portfolio">
         <div className="hr-case-wrap">
-          <PortfolioReturnLink href="/printer#work">Back to selected work</PortfolioReturnLink>
+          <PortfolioReturnLink href="/#work">Back to selected work</PortfolioReturnLink>
         </div>
       </nav>
     </main>

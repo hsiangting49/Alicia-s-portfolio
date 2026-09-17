@@ -12,7 +12,7 @@ const projects = [
     description:
       "Creating a clearer, more consistent care experience across patient and clinical workflows.",
     visual: "cogensus",
-    href: "/printer/cogensus",
+    href: "/cogensus",
     tone: "blue",
   },
   {
@@ -22,7 +22,7 @@ const projects = [
     description:
       "Designing a trustworthy AI assistant that supports independence and human connection.",
     visual: "elders",
-    href: "/printer/eldersconnect",
+    href: "/eldersconnect",
     tone: "coral",
   },
   {
@@ -32,7 +32,7 @@ const projects = [
     description:
       "Turning a fragmented weekly review into a focused, auditable first pass.",
     visual: "hr",
-    href: "/printer/hr-timecard",
+    href: "/hr-timecard",
     tone: "lime",
   },
 ];

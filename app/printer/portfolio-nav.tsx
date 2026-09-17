@@ -11,10 +11,10 @@ type PortfolioNavProps = {
 };
 
 export default function PortfolioNav({
-  homeHref = "/printer#top",
-  workHref = "/printer#work",
-  aboutHref = "/printer#about",
-  contactHref = "/printer#contact-footer",
+  homeHref = "/#top",
+  workHref = "/#work",
+  aboutHref = "/#about",
+  contactHref = "/#contact-footer",
   onWorkClick,
 }: PortfolioNavProps) {
   const [visible, setVisible] = useState(true);

@@ -41,7 +41,7 @@ function Label({ children }: { children: React.ReactNode }) {
 export default function Home() {
   return (
     <main id="top" className="ec-case">
-      <PortfolioNav homeHref="/printer#top" workHref="/printer#work" aboutHref="/printer#about" contactHref="/printer#contact-footer" />
+      <PortfolioNav homeHref="/#top" workHref="/#work" aboutHref="/#about" contactHref="/#contact-footer" />
 
       <section className="ec-case-hero">
         <div className="ec-case-wrap ec-case-hero-grid">
@@ -114,7 +114,7 @@ export default function Home() {
 
       <section className="ec-case-reflection"><div className="ec-case-wrap ec-case-reflection-grid"><div><Label>06 / Reflection</Label><h2>The right feature can still fail under the wrong framing.</h2></div><div className="ec-case-reflection-note"><p>This project shifted my focus from what AI can do to how people understand its role.</p><p>Trust came from clear boundaries, user control, and support for the relationships participants already valued.</p></div></div></section>
 
-      <nav className="ec-case-return" aria-label="Return to portfolio"><div className="ec-case-wrap"><PortfolioReturnLink href="/printer#work" direction="back">Back to selected work</PortfolioReturnLink></div></nav>
+      <nav className="ec-case-return" aria-label="Return to portfolio"><div className="ec-case-wrap"><PortfolioReturnLink href="/#work" direction="back">Back to selected work</PortfolioReturnLink></div></nav>
     </main>
   );
 }

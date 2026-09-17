@@ -204,7 +204,7 @@ export default function CogensusCaseStudy() {
         </div>
       </section>
 
-      <nav className="cg-case-return" aria-label="Return to portfolio"><div className="cg-case-wrap"><PortfolioReturnLink href="/printer#work" direction="back">Back to selected work</PortfolioReturnLink></div></nav>
+      <nav className="cg-case-return" aria-label="Return to portfolio"><div className="cg-case-wrap"><PortfolioReturnLink href="/#work" direction="back">Back to selected work</PortfolioReturnLink></div></nav>
     </main>
   );
 }

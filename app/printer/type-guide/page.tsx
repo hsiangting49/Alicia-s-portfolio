@@ -41,7 +41,7 @@ export default function PrinterTypeGuide() {
     <main className="type-guide-page">
       <PortfolioNav />
       <header className="type-guide-header">
-        <PortfolioReturnLink href="/printer#top">Back to portfolio</PortfolioReturnLink>
+        <PortfolioReturnLink href="/#top">Back to portfolio</PortfolioReturnLink>
         <p>Typography asset · current system</p>
         <h1>Four voices,<br />one visual story.</h1>
         <div className="type-guide-summary">
