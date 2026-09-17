@@ -139,7 +139,7 @@ export default function CogensusCaseStudy() {
           <div className="cg-role-screens" aria-label="Role-specific product interfaces">
             <figure><div className="cg-role-phone device-phone-shell"><img src="/assets/cogensus/member-brain-game.png?v=20260914-2" alt="Member activity interface" /></div><figcaption><span>Member activity</span><strong>Focused tasks use clear hierarchy, feedback, and large actions.</strong></figcaption></figure>
             <figure><div className="cg-role-phone device-phone-shell"><img src="/assets/cogensus/caregiver-my-family.png?v=20260914-2" alt="Trusted supporter family overview mobile interface" /></div><figcaption><span>Supporter overview</span><strong>Connected people and available actions are organized around support.</strong></figcaption></figure>
-            <figure><div className="cg-role-phone cg-role-phone-provider device-phone-shell"><img src="/assets/cogensus/provider-dashboard.png" alt="Provider dashboard showing patient records, trends, and statistics" /></div><figcaption><span>Provider review</span><strong>A data-focused view brings user trends and records together so providers can assess what needs attention.</strong></figcaption></figure>
+            <figure><div className="cg-role-phone cg-role-phone-provider device-phone-shell"><img src="/assets/cogensus/provider-dashboard-2.png" alt="Provider dashboard showing patient records, trends, and statistics" /></div><figcaption><span>Provider review</span><strong>A data-focused view brings user trends and records together so providers can assess what needs attention.</strong></figcaption></figure>
           </div>
         </div>
       </section>

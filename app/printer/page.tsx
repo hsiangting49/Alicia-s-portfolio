@@ -318,7 +318,7 @@ export default function PrinterPrototype() {
                             <img src="/assets/printer/projects/cogensus-assessments.png" alt="Cogensus assessment management screen" />
                           </figure>
                           <figure className="printer-device-phone printer-device-phone-cogensus device-phone-shell">
-                            <img src="/assets/printer/projects/cogensus-dashboard.png" alt="Cogensus patient dashboard on a phone" />
+                            <img src="/assets/cogensus/member-dashboard-clean.png" alt="Cogensus member dashboard on a phone" />
                           </figure>
                         </div>
                       )}

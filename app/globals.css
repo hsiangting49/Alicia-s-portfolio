@@ -1411,6 +1411,7 @@
 /* Project imagery: device-led compositions with a soft wash behind each set. */
 .printer-project-image[class*="printer-project-visual-"]{
   isolation:isolate;
+  container-type:size;
   display:grid;
   place-items:center;
   background:#f7f5eb;
@@ -1484,6 +1485,7 @@
   z-index:1;
   left:25%;
   top:13%;
+  width:36cqh;
   height:78%;
   transform:rotate(-7deg);
 }
@@ -1491,6 +1493,7 @@
   z-index:2;
   right:25%;
   top:5%;
+  width:40.6cqh;
   height:88%;
   transform:rotate(5deg);
 }
@@ -1530,6 +1533,7 @@
   z-index:2;
   right:10%;
   bottom:4%;
+  width:37.8cqh;
   height:82%;
   transform:rotate(6deg);
 }
@@ -3235,7 +3239,7 @@ h4{
 .ec-case-hero-phone.device-phone-shell{
   --phone-radius:31px;
   width:210px;
-  height:422px;
+  height:442px;
 }
 .ec-case-hero-phone.device-phone-shell>img{object-fit:cover}
 .ec-case-wireframes>div{
@@ -3267,14 +3271,16 @@ h4{
    radius ratio rather than the same oversized pixel value. */
 .printer-device-phone.device-phone-shell{
   --phone-bezel:3px;
-  --phone-radius:17px;
   --phone-notch-top:4px;
   --phone-notch-height:8px;
   --phone-notch-width:36%;
   position:absolute;
   padding:0;
 }
-.printer-device-phone.device-phone-shell>img{border-radius:14px!important}
+.printer-device-phone-back.device-phone-shell>img{
+  /* This source image has transparent, pre-rounded corners. */
+  background:#fffcf4;
+}
 
 /* Cogensus phone evidence now uses a real wrapper instead of drawing a thick
    outline directly on the screenshot. */
@@ -3362,11 +3368,25 @@ h4{
   max-height:none;
 }
 
+/* Keep the two permission directions legible as one connected idea. */
+.cg-control-grid{
+  padding:34px 40px;
+  border-radius:10px;
+  background:var(--cg-blue);
+}
+@media(max-width:980px){
+  .cg-control-grid{gap:0;padding:30px 34px}
+  .cg-control-grid article{padding:20px 0 28px}
+  .cg-control-grid h3{margin-top:22px}
+  .cg-control-link{padding:12px 0 18px}
+}
+
 @media(max-width:620px){
+  .cg-control-grid{padding:22px 24px}
   .ec-case-hero-phone.device-phone-shell{
     --phone-radius:28px;
-    width:185px;
-    height:372px;
+    width:175px;
+    height:365px;
   }
   .ec-case-wireframes>div{
     --phone-bezel:3px;
@@ -3377,5 +3397,65 @@ h4{
   .cg-role-phone.device-phone-shell,
   .cg-sharing-phone.device-phone-shell{
     --phone-radius:31px;
+  }
+}
+
+/* Phone corners scale with each mockup's own width and height. Fixed pixel
+   radii made the two portfolio project thumbnails look too round when small. */
+.device-phone-shell{
+  border-radius:12% / 5.5%!important;
+}
+.device-phone-shell::after{
+  border-radius:12% / 5.5%;
+}
+.device-phone-shell>img:not(.demo-sent),
+.printer-device-phone.device-phone-shell>img{
+  border-radius:12% / 5.5%!important;
+}
+.device-phone-shell::before{
+  top:1.6%;
+  height:3.4%;
+}
+.demo-carousel{width:min(248px,100%)}
+.demo-phone.device-phone-shell{
+  width:100%;
+  height:auto;
+  aspect-ratio:248/524;
+}
+
+/* One corner treatment for colored content panels; full-width section bands,
+   small controls, diagrams and device screens keep their own geometry. */
+.printer-project-image[class*="printer-project-visual-"],
+.hr-case :is(.hr-case-hero-visual,.hr-case-metrics,.hr-case-example,.hr-case-opportunity,.hr-case-time,.hr-case-ownership,.hr-case-ai-callout,.hr-case-flow-compare li,.hr-case-impact-grid li,.hr-case-future-steps li,.hr-case-merge-graphic,.hr-case-anomaly-graphic),
+.ec-case :is(.ec-case-hero-visual,.ec-case-question,.ec-case-opportunities article,.ec-case-research-grid article,.ec-case-wireframes,.ec-case-study-stats div,.ec-case-scenarios article,.ec-case-reflection-note),
+.cg-case :is(.cg-hero-mockup,.cg-system-preview,.cg-before-after article,.cg-map-board,.cg-role-screens,.cg-source-card,.cg-view-stack article,.cg-principle,.cg-control-grid,.cg-sharing-evidence,.cg-handoff-grid .cg-engineering-card,.cg-alignment-note){
+  border-radius:10px!important;
+}
+
+/* At stacked widths the transformation reads top-to-bottom while the three
+   outcome cards keep their original filled treatment. */
+@media(max-width:980px){
+  .cg-information-flow{gap:0}
+  .cg-view-stack{width:min(100%,680px);margin-inline:auto}
+  .cg-flow-branch{height:68px}
+  .cg-flow-branch i{display:none}
+  .cg-flow-branch::before{
+    left:50%;
+    top:0;
+    width:1px;
+    height:49px;
+  }
+  .cg-flow-branch::after{
+    content:"";
+    display:block;
+    position:absolute;
+    left:calc(50% - 5px);
+    top:42px;
+    width:10px;
+    height:10px;
+    background:transparent;
+    border-right:1px solid var(--cg-ink);
+    border-bottom:1px solid var(--cg-ink);
+    transform:rotate(45deg);
   }
 }
