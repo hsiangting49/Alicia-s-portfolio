@@ -199,7 +199,7 @@ export default function PrinterPrototype() {
       <header className="printer-intro" id="top">
         <p className="printer-kicker">Product Designer · UX Research · AI workflows</p>
         <p className="printer-intro-copy">
-          I make complex systems easier to understand — and easier to use.
+          Research the mess. Design the way through.
         </p>
       </header>
 
@@ -360,7 +360,7 @@ export default function PrinterPrototype() {
             />
           </figure>
           <p className="printer-kicker">A little about me</p>
-          <h2>I turn complex workflows into clear, human tools.</h2>
+          <h2>I like the part where things are still unclear.</h2>
           <p>
             I’m a product designer working across research, systems thinking,
             interaction design, and AI-assisted prototyping. I care about the
