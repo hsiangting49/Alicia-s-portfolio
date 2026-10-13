@@ -1569,6 +1569,9 @@
 }
 .printer-project-image-link .printer-project-image{
   margin-top:0;
+  transform:translateY(0);
+  box-shadow:0 0 0 rgba(23,24,20,0);
+  transition:transform .3s cubic-bezier(.2,.75,.25,1),box-shadow .3s ease;
 }
 .printer-device-laptop,
 .printer-device-pair{
@@ -1576,10 +1579,39 @@
   transform-origin:center;
 }
 .printer-project-image-link:hover .printer-device-laptop,
+.printer-project-image-link:focus-visible .printer-device-laptop{
+  transform:translateY(-4px) scale(1.025);
+}
 .printer-project-image-link:hover .printer-device-pair,
-.printer-project-image-link:focus-visible .printer-device-laptop,
 .printer-project-image-link:focus-visible .printer-device-pair{
-  transform:scale(1.035);
+  transform:scale(1.015);
+}
+.printer-device-phone,
+.printer-device-browser{
+  transition:transform .3s cubic-bezier(.2,.75,.25,1),box-shadow .3s ease;
+}
+@media(hover:hover){
+  .printer-project-image-link:hover .printer-project-image,
+  .printer-project-image-link:focus-visible .printer-project-image{
+    transform:translateY(-3px);
+    box-shadow:0 15px 28px #1718141d;
+  }
+  .printer-project-image-link:hover .printer-device-pair-elders .printer-device-phone-back,
+  .printer-project-image-link:focus-visible .printer-device-pair-elders .printer-device-phone-back{
+    transform:translate(-3px,-4px) rotate(-8deg);
+  }
+  .printer-project-image-link:hover .printer-device-pair-elders .printer-device-phone-front,
+  .printer-project-image-link:focus-visible .printer-device-pair-elders .printer-device-phone-front{
+    transform:translate(4px,-7px) rotate(6deg);
+  }
+  .printer-project-image-link:hover .printer-device-pair-cogensus .printer-device-browser,
+  .printer-project-image-link:focus-visible .printer-device-pair-cogensus .printer-device-browser{
+    transform:translate(-3px,-4px) rotate(-4deg);
+  }
+  .printer-project-image-link:hover .printer-device-phone-cogensus,
+  .printer-project-image-link:focus-visible .printer-device-phone-cogensus{
+    transform:translate(4px,-7px) rotate(7deg);
+  }
 }
 .printer-project-image-link:focus-visible{
   outline:3px solid var(--project-accent);
@@ -1597,19 +1629,65 @@
   font-size:13px;
   font-weight:650;
 }
+.printer-project>a:not(.printer-project-image-link) span{
+  display:inline-block;
+  transition:transform .18s ease;
+}
+.printer-project>a:not(.printer-project-image-link):hover span,
+.printer-project>a:not(.printer-project-image-link):focus-visible span{
+  transform:translate(3px,-3px);
+}
 
-/* Preserve readable glyphs while the content rhythm subtly follows the widening sheet. */
-.printer-project>.printer-project-meta{
-  width:94%;
-  margin-inline:auto;
+@media(prefers-reduced-motion:reduce){
+  .printer-project-image-link .printer-project-image,
+  .printer-device-laptop,
+  .printer-device-pair,
+  .printer-device-phone,
+  .printer-device-browser,
+  .printer-project>a:not(.printer-project-image-link) span,
+  .printer-about-actions a,
+  .printer-about-actions a::before,
+  .printer-about-footer>div a,
+  .printer-about-footer>div a::before{
+    transition:none!important;
+  }
+  .printer-project-image-link:hover .printer-project-image,
+  .printer-project-image-link:focus-visible .printer-project-image,
+  .printer-project-image-link:hover .printer-device-laptop,
+  .printer-project-image-link:focus-visible .printer-device-laptop,
+  .printer-project-image-link:hover .printer-device-pair,
+  .printer-project-image-link:focus-visible .printer-device-pair{
+    transform:none!important;
+  }
+  .printer-project-image-link:hover .printer-device-phone-back,
+  .printer-project-image-link:focus-visible .printer-device-phone-back{
+    transform:rotate(-7deg)!important;
+  }
+  .printer-project-image-link:hover .printer-device-phone-front,
+  .printer-project-image-link:focus-visible .printer-device-phone-front{
+    transform:rotate(5deg)!important;
+  }
+  .printer-project-image-link:hover .printer-device-browser,
+  .printer-project-image-link:focus-visible .printer-device-browser{
+    transform:rotate(-3deg)!important;
+  }
+  .printer-project-image-link:hover .printer-device-phone-cogensus,
+  .printer-project-image-link:focus-visible .printer-device-phone-cogensus{
+    transform:rotate(6deg)!important;
+  }
 }
-.printer-project>h2{
-  width:96%;
-  margin-inline:auto;
-}
-.printer-project>.printer-project-copy{
-  width:98%;
-  margin-inline:auto;
+
+/* Optical stretch only: the document keeps its original layout width while
+   printed content visually expands as it enters the flared lower window. */
+.printer-project>.printer-project-meta,
+.printer-project>h2,
+.printer-project>.printer-project-copy,
+.printer-project>.printer-project-image-link,
+.printer-project>a:not(.printer-project-image-link),
+.printer-project>.printer-project-coming-soon{
+  transform:scaleX(var(--project-perspective-scale,1));
+  transform-origin:50% 50%;
+  will-change:transform;
 }
 
 .printer-footer-slogan span{
@@ -1622,6 +1700,185 @@
   font-weight:700;
   letter-spacing:.08em;
   text-transform:uppercase;
+}
+
+/* Printer-free concept sketch: keep the continuous paper metaphor, but turn
+   the literal machine into a quiet editorial slot. */
+.paper-concept{
+  --pc-ink:#171814;
+  --pc-paper:#fffefa;
+  --pc-bg:#eeeee8;
+  min-height:100vh;
+  overflow:hidden;
+  background:var(--pc-bg);
+  color:var(--pc-ink);
+  font-family:var(--font-inter),Arial,sans-serif;
+}
+.paper-concept-nav{
+  position:absolute;
+  z-index:4;
+  inset:0 0 auto;
+  display:flex;
+  justify-content:space-between;
+  padding:26px max(28px,calc((100vw - 1180px)/2));
+  font-size:15px;
+  font-weight:750;
+  letter-spacing:.05em;
+}
+.paper-concept-nav a{color:inherit;text-decoration:none}
+.paper-concept-nav>div{display:flex;gap:32px}
+.paper-concept-hero{
+  min-height:82vh;
+  padding:150px max(30px,calc((100vw - 1180px)/2)) 100px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  background:#e7ff61;
+}
+.paper-concept-hero>p{
+  font-size:13px;
+  font-weight:750;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.paper-concept-hero h1{
+  max-width:1040px;
+  margin-top:35px;
+  font-family:var(--font-jacques),Georgia,serif;
+  font-size:clamp(58px,8.4vw,120px);
+  line-height:.88;
+  letter-spacing:-.05em;
+}
+.paper-concept-intro{
+  margin-top:65px;
+  display:grid;
+  grid-template-columns:180px minmax(0,480px);
+  gap:80px;
+  align-items:end;
+}
+.paper-concept-intro span{
+  font-size:12px;
+  font-weight:750;
+  letter-spacing:.08em;
+  line-height:1.5;
+  text-transform:uppercase;
+}
+.paper-concept-intro p{font-size:18px;line-height:1.5}
+.paper-concept-feed{padding:0 0 130px}
+.paper-concept-slot{
+  position:sticky;
+  z-index:3;
+  top:0;
+  height:96px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:24px;
+  align-items:center;
+  padding:0 max(24px,calc((100vw - 1240px)/2));
+  background:linear-gradient(180deg,#eeeee8 70%,#eeeee800);
+  pointer-events:none;
+}
+.paper-concept-slot span{height:4px;border-radius:99px;background:var(--pc-ink)}
+.paper-concept-slot p{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.paper-concept-sheet{
+  width:min(1120px,calc(100vw - 56px));
+  margin:-22px auto 0;
+  background:var(--pc-paper);
+  box-shadow:0 20px 70px #17181414;
+}
+.paper-concept-project{
+  min-height:100vh;
+  padding:90px clamp(34px,7vw,100px) 100px;
+  border-bottom:1.5px dashed #777;
+}
+.paper-concept-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:30px;
+  text-transform:uppercase;
+}
+.paper-concept-meta span{font-size:42px;font-weight:450}
+.paper-concept-meta p{font-size:12px;font-weight:750;letter-spacing:.1em;text-align:right}
+.paper-concept-copy{
+  margin-top:70px;
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);
+  gap:70px;
+  align-items:end;
+}
+.paper-concept-copy h2{
+  font-family:var(--font-jacques),Georgia,serif;
+  font-size:clamp(50px,7vw,92px);
+  line-height:.92;
+  letter-spacing:-.04em;
+}
+.paper-concept-copy p{max-width:420px;font-size:17px;line-height:1.55}
+.paper-concept-visual{
+  position:relative;
+  height:min(48vw,520px);
+  margin-top:70px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  border:1.5px solid var(--pc-ink);
+  border-radius:18px;
+  color:inherit;
+}
+.paper-concept-project.is-lime .paper-concept-visual{background:#f2f7cf}
+.paper-concept-project.is-coral .paper-concept-visual{background:#f8e4dc}
+.paper-concept-project.is-blue .paper-concept-visual{background:#deeff9}
+.paper-concept-visual>img{width:86%;height:86%;object-fit:contain}
+.paper-concept-pair{position:relative;width:88%;height:88%}
+.paper-concept-pair img{position:absolute;object-fit:contain}
+.paper-concept-pair img:first-child{left:2%;top:7%;width:73%;height:82%}
+.paper-concept-pair img:last-child{right:3%;bottom:1%;width:34%;height:82%}
+.paper-concept-project.is-blue .paper-concept-pair img:first-child{width:78%;height:78%}
+.paper-concept-project.is-blue .paper-concept-pair img:last-child{width:28%;height:78%}
+.paper-concept-link{
+  display:inline-block;
+  margin-top:30px;
+  padding-bottom:7px;
+  border-bottom:1px solid;
+  color:inherit;
+  font-size:14px;
+  font-weight:750;
+  text-decoration:none;
+}
+.paper-concept-end{
+  min-height:75vh;
+  padding:120px max(30px,calc((100vw - 1180px)/2));
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  background:#bedcff;
+}
+.paper-concept-end p{
+  max-width:850px;
+  font-family:var(--font-jacques),Georgia,serif;
+  font-size:clamp(48px,7vw,96px);
+  line-height:.95;
+}
+.paper-concept-end a{margin-top:48px;color:inherit;font-weight:750;text-decoration:none}
+@media(max-width:760px){
+  .paper-concept-nav{padding:20px}.paper-concept-nav>div{gap:16px}
+  .paper-concept-hero{min-height:75vh;padding:120px 22px 70px}
+  .paper-concept-hero h1{font-size:clamp(52px,15vw,76px)}
+  .paper-concept-intro{grid-template-columns:1fr;gap:24px;margin-top:48px}
+  .paper-concept-slot{height:76px;padding-inline:18px}
+  .paper-concept-sheet{width:calc(100vw - 28px);margin-top:-16px}
+  .paper-concept-project{min-height:auto;padding:64px 24px 76px}
+  .paper-concept-meta span{font-size:32px}
+  .paper-concept-copy{grid-template-columns:1fr;gap:26px;margin-top:48px}
+  .paper-concept-copy h2{font-size:clamp(44px,12vw,62px)}
+  .paper-concept-visual{height:64vw;margin-top:46px;border-radius:12px}
+  .paper-concept-end{min-height:65vh;padding:90px 24px}
 }
 @media(max-width:520px){
   .printer-about-footer>.printer-footer-slogan{
@@ -3476,4 +3733,154 @@ h4{
     border-bottom:1px solid var(--cg-ink);
     transform:rotate(45deg);
   }
+}
+
+/* Interactive scrapbook concept — isolated from the live home. */
+.scrapbook-concept{--scrap-blue:#2d61db;--scrap-ink:#24152d;--scrap-cream:#fbf6ea;min-height:100vh;overflow:hidden;background:var(--scrap-cream);color:var(--scrap-ink);font-family:var(--font-inter),Arial,sans-serif}
+.scrapbook-nav{position:absolute;z-index:20;inset:0 0 auto;display:flex;justify-content:space-between;padding:24px max(28px,calc((100vw - 1200px)/2));font-size:15px;font-weight:700}
+.scrapbook-nav a{color:var(--scrap-blue);text-decoration:none}.scrapbook-nav>div{display:flex;gap:30px}
+.scrapbook-hero{--mouse-x:0;--mouse-y:0;position:relative;min-height:100svh;overflow:hidden;padding:110px 24px 70px;display:grid;place-items:center}
+.scrapbook-title-wrap{position:relative;z-index:4;width:min(820px,70vw);text-align:center}
+.scrapbook-title-wrap>p:first-child{margin-bottom:10px;color:var(--scrap-blue);font-family:var(--font-jacques),Georgia,serif;font-size:clamp(23px,2.4vw,34px);font-style:italic}
+.scrapbook-title h1{display:flex;justify-content:center;flex-wrap:wrap;color:var(--scrap-blue);font-family:var(--font-jacques),Georgia,serif;font-size:clamp(58px,8vw,112px);font-weight:400;line-height:.88;letter-spacing:-.045em}
+.scrapbook-title h1+h1{margin-top:6px}
+.scrapbook-title h1 span{display:inline-block;opacity:0;transform:translateY(-110px) rotate(-10deg);animation:scrapLetterIn .75s cubic-bezier(.2,.8,.2,1.18) forwards}
+.scrapbook-hero.is-leaving .scrapbook-title h1 span{animation:scrapLetterOut .5s cubic-bezier(.55,.08,.9,.45) forwards!important}
+.scrapbook-subcopy{max-width:620px;margin:28px auto 0;color:#4b3b50;font-size:17px;line-height:1.55}
+@keyframes scrapLetterIn{0%{opacity:0;transform:translateY(-110px) rotate(-10deg)}72%{opacity:1;transform:translateY(7px) rotate(2deg)}100%{opacity:1;transform:translateY(0) rotate(0)}}
+@keyframes scrapLetterOut{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(170px) rotate(16deg)}}
+.scrapbook-polaroid{position:absolute;z-index:3;padding:12px 12px 42px;border:1px solid #ded6c8;background:#fff;box-shadow:0 12px 28px #25172b1f;transition:transform .22s cubic-bezier(.2,.75,.25,1)}
+.scrapbook-polaroid img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.85)}.scrapbook-polaroid figcaption{position:absolute;left:13px;right:13px;bottom:12px;font-family:var(--font-jacques),Georgia,serif;font-size:14px;text-align:center}
+.scrapbook-polaroid-person{left:7vw;top:42%;width:clamp(170px,19vw,260px);height:clamp(225px,25vw,335px);transform:translate(calc(var(--mouse-x) * -20px),calc(var(--mouse-y) * -14px)) rotate(-7deg)}
+.scrapbook-polaroid-person:hover{transform:translate(calc(var(--mouse-x) * -20px),calc(var(--mouse-y) * -14px - 9px)) rotate(-3deg) scale(1.035)}
+.scrapbook-polaroid-work{right:6vw;top:49%;width:clamp(220px,27vw,390px);height:clamp(170px,21vw,300px);transform:translate(calc(var(--mouse-x) * 25px),calc(var(--mouse-y) * 17px)) rotate(6deg)}
+.scrapbook-polaroid-work:hover{transform:translate(calc(var(--mouse-x) * 25px),calc(var(--mouse-y) * 17px - 9px)) rotate(2deg) scale(1.03)}
+.scrapbook-tape{position:absolute;z-index:2;left:24%;top:-19px;width:86px;height:36px;background:#f2a9bd99;transform:rotate(-12deg)}
+.scrapbook-badge{position:absolute;z-index:5;left:7.5vw;top:14%;padding:18px 22px;display:flex;flex-direction:column;background:#f57249;border:2px dashed #fff7e9;box-shadow:8px 8px 0 #171442;color:#fff;font-family:var(--font-jacques),Georgia,serif;text-align:center;transform:translate(calc(var(--mouse-x) * -11px),calc(var(--mouse-y) * -8px)) rotate(-6deg)}
+.scrapbook-badge strong{font-size:25px}.scrapbook-badge span{font-size:17px}
+.scrapbook-bubble{position:absolute;z-index:5;right:8vw;top:14%;width:190px;height:140px;padding:38px 20px 20px;border-radius:50%;background:#f6d04d;box-shadow:8px 8px 0 #171442;color:var(--scrap-blue);font-size:17px;font-weight:800;text-align:center;transform:translate(calc(var(--mouse-x) * 14px),calc(var(--mouse-y) * -10px)) rotate(7deg);transition:transform .2s ease}
+.scrapbook-bubble:hover{transform:translate(calc(var(--mouse-x) * 14px),calc(var(--mouse-y) * -10px - 6px)) rotate(-2deg) scale(1.05)}
+.scrapbook-location{position:absolute;z-index:6;left:6vw;bottom:8%;padding:10px 22px;border-radius:999px;background:#4f9d72;box-shadow:5px 5px 0 #171442;color:#fff;font-family:var(--font-jacques),Georgia,serif;font-size:16px;font-weight:700;transform:rotate(-3deg)}
+.scrapbook-work-sticker{position:absolute;z-index:6;right:8vw;bottom:8%;display:grid;place-items:center;width:118px;height:118px;border:2px solid var(--scrap-blue);border-radius:50%;background:#fff;color:var(--scrap-blue);font-size:13px;font-weight:800;text-decoration:none;text-transform:uppercase;transition:transform .25s cubic-bezier(.2,.8,.2,1.2),background .2s}
+.scrapbook-work-sticker:hover{transform:rotate(12deg) scale(1.08);background:#bdf3f6}
+.scrapbook-squiggle{position:absolute;z-index:2;right:29%;bottom:8%;width:240px;overflow:visible}.scrapbook-squiggle path{fill:none;stroke:var(--scrap-ink);stroke-width:3;stroke-linecap:round}
+.scrapbook-projects{padding:110px 0 130px;background:#fff}
+.scrapbook-projects>header{width:min(1180px,calc(100% - 48px));margin:0 auto 56px;display:flex;justify-content:space-between;gap:40px;align-items:end}
+.scrapbook-projects>header p{color:var(--scrap-blue);font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.scrapbook-projects>header h2{max-width:760px;margin-top:10px;color:var(--scrap-blue);font-family:var(--font-jacques),Georgia,serif;font-size:clamp(48px,6vw,82px);line-height:.95}.scrapbook-projects>header>span{font-size:13px;font-weight:800;text-transform:uppercase}
+.scrapbook-track{display:flex;gap:34px;overflow-x:auto;scroll-snap-type:x mandatory;padding:18px max(24px,calc((100vw - 1180px)/2)) 52px;cursor:grab;scrollbar-width:none;touch-action:pan-y}.scrapbook-track::-webkit-scrollbar{display:none}.scrapbook-track.is-dragging{cursor:grabbing;scroll-snap-type:none}
+.scrapbook-card{--card-color:#e7ff61;position:relative;flex:0 0 min(770px,72vw);min-height:610px;padding:22px 22px 36px;scroll-snap-align:center;border:1.5px solid var(--scrap-ink);border-radius:8px;background:#fff;box-shadow:10px 12px 0 var(--card-color);color:inherit;text-decoration:none;transform:rotate(-.65deg);transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s ease}
+.scrapbook-card:nth-child(even){transform:rotate(.65deg)}.scrapbook-card.is-coral{--card-color:#ff987a}.scrapbook-card.is-blue{--card-color:#a9dfff}.scrapbook-card:hover{transform:translateY(-10px) rotate(.2deg) scale(1.01);box-shadow:16px 20px 0 var(--card-color)}
+.scrapbook-card-image{height:390px;display:grid;place-items:center;overflow:hidden;background:color-mix(in srgb,var(--card-color) 42%,#fff)}.scrapbook-card-image img{width:88%;height:88%;object-fit:contain;transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s}.scrapbook-card:hover .scrapbook-card-image img{transform:scale(1.045) rotate(-1deg);filter:saturate(1.08)}
+.scrapbook-card-meta{margin-top:24px;display:flex;justify-content:space-between;gap:20px;font-size:12px;font-weight:800;text-transform:uppercase}.scrapbook-card h3{margin-top:15px;font-family:var(--font-jacques),Georgia,serif;font-size:clamp(38px,4.6vw,64px);line-height:1}.scrapbook-card>i{position:absolute;right:28px;bottom:28px;font-size:28px;font-style:normal}
+.scrapbook-footer{min-height:90vh;padding:120px max(28px,calc((100vw - 1080px)/2));display:flex;flex-direction:column;justify-content:center;background:#f57249;color:#fff6e8}.scrapbook-footer>p{font-size:15px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.scrapbook-footer h2{max-width:900px;margin-top:24px;font-family:var(--font-jacques),Georgia,serif;font-size:clamp(66px,10vw,140px);line-height:.86}.scrapbook-footer a{align-self:flex-start;margin-top:52px;padding:15px 24px;border-radius:999px;background:#fff;color:var(--scrap-ink);font-weight:800;text-decoration:none}
+@media(prefers-reduced-motion:reduce){.scrapbook-title h1 span{opacity:1;transform:none;animation:none!important}.scrapbook-polaroid,.scrapbook-badge,.scrapbook-bubble{transform:none!important;transition:none}}
+@media(max-width:840px){.scrapbook-nav{padding:20px}.scrapbook-nav>div{gap:16px}.scrapbook-hero{min-height:930px;padding-top:120px;align-content:start}.scrapbook-title-wrap{width:94vw}.scrapbook-title h1{font-size:clamp(50px,13vw,76px)}.scrapbook-polaroid-person{left:7vw;top:56%;width:180px;height:235px}.scrapbook-polaroid-work{right:4vw;top:61%;width:230px;height:180px}.scrapbook-badge{top:42%;left:8vw}.scrapbook-bubble{top:43%;right:6vw;width:145px;height:108px;padding-top:28px;font-size:14px}.scrapbook-location{bottom:5%}.scrapbook-work-sticker{bottom:4%;width:92px;height:92px}.scrapbook-squiggle{display:none}.scrapbook-projects{padding-top:82px}.scrapbook-projects>header{align-items:flex-start;flex-direction:column}.scrapbook-projects>header h2{font-size:48px}.scrapbook-card{flex-basis:86vw;min-height:470px}.scrapbook-card-image{height:270px}}
+
+/* Scrapbook preview: scroll-directed transition and responsive carousel. */
+.scrapbook-concept{overflow:clip}
+.scrapbook-nav{align-items:center}
+.scrapbook-nav-links{display:flex;gap:30px}
+.scrapbook-menu-toggle{display:none}
+.scrapbook-hero{--hero-grow:0;--hero-fall:0;display:block;height:165svh;min-height:0;padding:0;overflow:visible}
+.scrapbook-hero-stage{--mouse-x:0;--mouse-y:0;position:sticky;top:0;display:grid;place-items:center;width:100%;height:100svh;min-height:640px;overflow:hidden;padding:100px 24px 64px}
+.scrapbook-title-wrap{width:min(820px,70vw);padding:16px 24px;border-radius:8px;background:rgb(245 248 255 / 95%);transform:translateY(calc(var(--hero-fall) * 48vh)) scale(calc(1 + var(--hero-grow) * .10));opacity:calc(1 - var(--hero-fall) * .6);will-change:transform}
+.scrapbook-title{margin:0;color:var(--scrap-blue);font-family:var(--font-jacques),Georgia,serif;font-size:clamp(58px,7.4vw,104px);font-weight:400;line-height:.94;letter-spacing:-.045em}
+.scrapbook-title-line{display:flex;justify-content:center;flex-wrap:wrap;column-gap:.22em}
+.scrapbook-title-line+.scrapbook-title-line{margin-top:4px}
+.scrapbook-title-word{display:inline-flex;white-space:nowrap}
+.scrapbook-title-letter{display:inline-block;opacity:0;transform:translateY(-110px) rotate(-10deg);animation:scrapLetterIn .75s cubic-bezier(.2,.8,.2,1.18) forwards}
+.scrapbook-subcopy{margin-top:24px}
+.scrapbook-mobile-cta{display:none}
+.scrapbook-polaroid-person{transform:translate(calc(var(--mouse-x) * -20px - var(--hero-fall) * 22vw),calc(var(--mouse-y) * -14px + var(--hero-fall) * 80vh)) rotate(calc(-7deg - var(--hero-fall) * 28deg));opacity:calc(1 - var(--hero-fall))}
+.scrapbook-polaroid-work{transform:translate(calc(var(--mouse-x) * 25px + var(--hero-fall) * 23vw),calc(var(--mouse-y) * 17px + var(--hero-fall) * 66vh)) rotate(calc(6deg + var(--hero-fall) * 24deg));opacity:calc(1 - var(--hero-fall))}
+.scrapbook-badge{transform:translate(calc(var(--mouse-x) * -11px - var(--hero-fall) * 24vw),calc(var(--mouse-y) * -8px + var(--hero-fall) * 65vh)) rotate(calc(-6deg - var(--hero-fall) * 42deg));opacity:calc(1 - var(--hero-fall))}
+.scrapbook-bubble{transform:translate(calc(var(--mouse-x) * 14px + var(--hero-fall) * 23vw),calc(var(--mouse-y) * -10px + var(--hero-fall) * 45vh)) rotate(calc(7deg + var(--hero-fall) * 42deg));opacity:calc(1 - var(--hero-fall))}
+.scrapbook-location{transform:translate(calc(var(--hero-fall) * -22vw),calc(var(--hero-fall) * 58vh)) rotate(calc(-3deg - var(--hero-fall) * 26deg));opacity:calc(1 - var(--hero-fall))}
+.scrapbook-work-sticker{transform:translate(calc(var(--hero-fall) * 22vw),calc(var(--hero-fall) * 60vh)) rotate(calc(var(--hero-fall) * 26deg));opacity:calc(1 - var(--hero-fall))}
+.scrapbook-squiggle{transform:translate(calc(var(--hero-fall) * 12vw),calc(var(--hero-fall) * 55vh));opacity:calc(1 - var(--hero-fall))}
+.scrapbook-projects{position:relative;z-index:7;margin-top:-18svh;padding-top:125px;border-radius:26px 26px 0 0}
+.scrapbook-projects>header{align-items:end}
+.scrapbook-carousel-controls{display:flex;align-items:center;gap:13px;white-space:nowrap;font-size:13px;font-weight:800}
+.scrapbook-carousel-controls button{display:grid;place-items:center;width:42px;height:42px;border:1.5px solid var(--scrap-ink);border-radius:50%;background:#fff;color:var(--scrap-ink);font-size:21px;cursor:pointer;transition:background .2s,transform .2s}
+.scrapbook-carousel-controls button:not(:disabled):hover{background:#dff7ff;transform:translateY(-2px)}
+.scrapbook-carousel-controls button:disabled{opacity:.35;cursor:not-allowed}
+.scrapbook-track{gap:60px;touch-action:pan-x pan-y}
+.scrapbook-card{min-height:680px;padding-bottom:40px}
+.scrapbook-card:focus-visible,.scrapbook-work-sticker:focus-visible,.scrapbook-mobile-cta:focus-visible,.scrapbook-nav a:focus-visible,.scrapbook-nav button:focus-visible,.scrapbook-carousel-controls button:focus-visible{outline:3px solid var(--scrap-blue);outline-offset:4px}
+.scrapbook-card-image{height:365px}
+.scrapbook-card-image>img{width:88%;height:88%}
+.scrapbook-phone{width:auto;height:min(328px,90%);aspect-ratio:430/932;flex:none}
+.scrapbook-phone img{display:block;width:100%;height:100%;object-fit:cover}
+.scrapbook-card:hover .scrapbook-phone img{transform:none}
+.scrapbook-card h3{margin-top:12px;font-size:clamp(37px,4vw,58px)}
+.scrapbook-card-description{max-width:590px;margin:16px 52px 0 0;color:#4b3b50;font-size:17px;line-height:1.45}
+.scrapbook-card-methods{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px;padding-right:44px}
+.scrapbook-card-methods span{padding:7px 11px;border:1px solid #c9c0cb;border-radius:999px;font-size:12px;font-weight:700}
+.scrapbook-card-arrow{position:absolute;right:28px;bottom:30px;font-size:28px}
+@media(max-width:1000px){
+  .scrapbook-title-wrap{width:min(720px,78vw)}
+  .scrapbook-title{font-size:clamp(56px,7.5vw,78px)}
+  .scrapbook-polaroid-person{left:4vw;top:52%;width:180px;height:235px}
+  .scrapbook-polaroid-work{right:3vw;top:56%;width:235px;height:185px}
+  .scrapbook-badge{left:5vw;top:17%}
+  .scrapbook-bubble{right:5vw;top:16%}
+}
+@media(max-width:840px){
+  .scrapbook-hero{height:156svh;min-height:0;padding:0}
+  .scrapbook-hero-stage{min-height:600px;padding-top:105px}
+  .scrapbook-title-wrap{width:min(690px,90vw)}
+  .scrapbook-title{font-size:clamp(48px,7.8vw,70px)}
+  .scrapbook-badge{top:15%}
+  .scrapbook-bubble{top:15%}
+  .scrapbook-polaroid-person{top:62%}
+  .scrapbook-polaroid-work{display:block;top:60%}
+  .scrapbook-projects{padding-top:100px}
+  .scrapbook-projects>header{flex-direction:row;align-items:end}
+  .scrapbook-card{flex-basis:min(680px,82vw);min-height:635px}
+  .scrapbook-card-image{height:320px}
+}
+@media(max-width:640px){
+  .scrapbook-nav{position:absolute;top:0;left:0;right:0;padding:18px 20px}
+  .scrapbook-menu-toggle{display:block;padding:9px 14px;border:1.5px solid var(--scrap-blue);border-radius:999px;background:#fff;color:var(--scrap-blue);font:inherit;font-size:13px;font-weight:800;cursor:pointer}
+  .scrapbook-nav>.scrapbook-nav-links{position:absolute;top:66px;right:16px;display:none;flex-direction:column;gap:0;min-width:180px;padding:8px;border:1px solid #d6d0d8;border-radius:10px;background:#fff;box-shadow:0 12px 30px #24152d22}
+  .scrapbook-nav>.scrapbook-nav-links.is-open{display:flex}
+  .scrapbook-nav-links a{padding:12px;border-radius:6px}
+  .scrapbook-nav-links a:hover{background:#f5f8ff}
+  .scrapbook-hero{height:auto;min-height:0}
+  .scrapbook-hero-stage{position:relative;top:auto;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:auto;min-height:0;overflow:hidden;padding:108px 20px 48px}
+  .scrapbook-title-wrap{order:0;width:100%;padding:16px;transform:none;opacity:1}
+  .scrapbook-title-wrap>p:first-child{font-size:clamp(20px,6vw,27px)}
+  .scrapbook-title{font-size:clamp(42px,10.5vw,62px);line-height:.98}
+  .scrapbook-title-line{column-gap:.18em}
+  .scrapbook-subcopy{margin-top:20px;font-size:15px}
+  .scrapbook-mobile-cta{display:flex;align-items:center;justify-content:center;gap:16px;width:100%;margin-top:24px;padding:15px 18px;border-radius:999px;background:var(--scrap-blue);color:#fff;font-size:15px;font-weight:800;text-decoration:none}
+  .scrapbook-polaroid-person{position:relative;order:1;top:auto;left:auto;width:clamp(170px,50vw,220px);height:clamp(225px,64vw,285px);margin:42px 0 0;transform:rotate(-5deg);opacity:1}
+  .scrapbook-polaroid-work,.scrapbook-badge,.scrapbook-bubble,.scrapbook-work-sticker,.scrapbook-squiggle{display:none}
+  .scrapbook-location{position:relative;order:2;left:auto;bottom:auto;align-self:flex-start;margin:22px 0 0 6px;transform:rotate(-3deg);opacity:1}
+  .scrapbook-projects{margin-top:0;padding:74px 0 90px;border-radius:0}
+  .scrapbook-projects>header{width:calc(100% - 40px);margin-bottom:30px;align-items:flex-start;flex-direction:column;gap:24px}
+  .scrapbook-projects>header h2{font-size:clamp(39px,10vw,55px)}
+  .scrapbook-carousel-controls{align-self:flex-end}
+  .scrapbook-track{gap:20px;padding:12px 20px 40px;touch-action:auto}
+  .scrapbook-card{flex-basis:calc(100vw - 68px);min-height:0;padding:13px 13px 48px;box-shadow:7px 8px 0 var(--card-color)}
+  .scrapbook-card-image{height:clamp(190px,58vw,290px)}
+  .scrapbook-phone{height:90%}
+  .scrapbook-card-meta{margin-top:20px;font-size:10px}
+  .scrapbook-card h3{font-size:clamp(31px,8vw,43px)}
+  .scrapbook-card-description{margin-right:15px;font-size:14px}
+  .scrapbook-card-methods{padding-right:0;margin-top:16px}
+  .scrapbook-card-methods span{font-size:10px}
+  .scrapbook-card-arrow{right:16px;bottom:13px;font-size:24px}
+  .scrapbook-footer{min-height:65vh;padding:85px 24px}
+  .scrapbook-footer h2{font-size:clamp(58px,15vw,95px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .scrapbook-hero{height:auto;min-height:100svh}
+  .scrapbook-hero-stage{position:relative;min-height:100svh}
+  .scrapbook-title-wrap{transform:none;opacity:1}
+  .scrapbook-title-letter{opacity:1;transform:none;animation:none}
+  .scrapbook-polaroid-person,.scrapbook-polaroid-work,.scrapbook-badge,.scrapbook-bubble,.scrapbook-location,.scrapbook-work-sticker,.scrapbook-squiggle{transform:none;opacity:1;transition:none}
+  .scrapbook-projects{margin-top:0}
+  .scrapbook-card,.scrapbook-card-image img{transition:none}
+  .scrapbook-track{scroll-behavior:auto}
 }

@@ -1,1 +1,1 @@
-export { default } from "./printer/page";
+export { default } from "./horizon-test/page";
