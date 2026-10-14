@@ -39,12 +39,26 @@ export default function HorizonTest() {
   const scrollFrame = useRef(0);
   const reduce = useRef(false);
   const [playful, setPlayful] = useState(false);
+  const [profileAnimated, setProfileAnimated] = useState(false);
+  const [profileVisible, setProfileVisible] = useState(true);
+  const [profileEntered, setProfileEntered] = useState(false);
+  const [horizonViewHeight, setHorizonViewHeight] = useState(230);
   const [activeSection, setActiveSection] = useState('home');
   const cap = useRef<SVGPathElement>(null);
   const ink = useRef<SVGPathElement>(null);
   const letterPath = useRef<SVGPathElement>(null);
   const designerD = useRef<SVGTSpanElement>(null);
   const flower = useRef<SVGGElement>(null);
+  useEffect(() => {
+    const timer = window.setTimeout(() => setProfileEntered(true), 1500);
+    return () => window.clearTimeout(timer);
+  }, []);
+  useEffect(() => {
+    setProfileAnimated(false);
+    if (!profileVisible) return;
+    const timer = window.setTimeout(() => setProfileAnimated(true), 1450);
+    return () => window.clearTimeout(timer);
+  }, [profileVisible]);
   const placeFlower = () => {
     if (!designerD.current || !flower.current) return;
     const box = designerD.current.getExtentOfChar(0);
@@ -66,16 +80,19 @@ export default function HorizonTest() {
       const node = scene.current;
       if (!node || !stage.current) return;
       const work = stage.current.querySelector<HTMLElement>('[data-work]');
+      const horizonSvg = stage.current.querySelector<SVGSVGElement>('[data-horizon] svg');
+      if (horizonSvg) setHorizonViewHeight(1400 * 180 / Math.max(1, horizonSvg.getBoundingClientRect().width));
       const stageHeight = Math.max(innerHeight, (work?.offsetHeight ?? 0) + 110);
       node.style.setProperty('--stage-height', `${stageHeight}px`);
       const p = clamp(-node.getBoundingClientRect().top / Math.max(1, innerHeight * .8));
+      setProfileVisible(p < .12);
       const readingLine = innerHeight * .3;
       const contactTop = document.getElementById('horizon-contact')?.getBoundingClientRect().top ?? Infinity;
       const aboutTop = document.getElementById('horizon-about')?.getBoundingClientRect().top ?? Infinity;
       setActiveSection(contactTop <= readingLine || (scrollY > innerHeight && scrollY + innerHeight >= document.documentElement.scrollHeight - 4) ? 'contact' : aboutTop <= readingLine ? 'about' : p >= .65 ? 'work' : 'home');
       stage.current.style.setProperty('--progress', String(p));
       stage.current.style.setProperty('--label-opacity', String(1 - clamp((p - .32) / .25)));
-      cap.current?.setAttribute('d', `${curve(p)} L 1500 230 L -100 230 Z`);
+      cap.current?.setAttribute('d', `${curve(p)} L 1500 2000 L -100 2000 Z`);
       ink.current?.setAttribute('d', brush(p));
       letterPath.current?.setAttribute('d', curve(p, -24));
       placeFlower();
@@ -127,7 +144,9 @@ export default function HorizonTest() {
     <section ref={scene} className={styles.scene}>
       <div ref={stage} className={styles.stage}>
         <div data-hero className={styles.hero}>
-          <article className={styles.profile}>
+          <article className={styles.profile} data-animated={profileAnimated} data-entered={profileEntered}>
+            <svg className={styles.profileLeaves} viewBox="0 0 80 65" aria-hidden="true"><path className={styles.leafStem} d="M39 63 C38 52 38 41 41 31" /><g className={styles.leafPair}><path d="M40 36 C29 37 19 31 17 19 C29 17 39 24 40 36Z M40 36 Q30 29 24 24" /><path d="M40 34 C42 21 54 14 65 17 C64 30 54 37 40 34Z M40 34 Q50 25 58 22" /></g></svg>
+            <svg className={styles.profileVine} viewBox="0 0 65 170" aria-hidden="true"><path className={styles.vineLine} pathLength="1" d="M19 156 C37 142 38 119 28 99 C20 83 22 65 34 48 C41 38 42 24 37 15" /><g className={styles.vineLeaves}><path d="M34 49 C35 34 46 27 56 29 C56 42 46 51 34 49Z M34 49 Q43 40 50 35" /><path d="M25 80 C13 79 7 70 9 59 C21 60 28 68 25 80Z M25 80 Q18 72 14 65" /><path d="M33 121 C34 109 44 102 54 103 C54 116 45 123 33 121Z M33 121 Q43 112 48 109" /></g></svg>
             <div className={styles.portrait}><img src="/assets/printer/about-photo.jpg" alt="Hsiang-Ting Lin" /></div>
             <p className={styles.name}>Hi, I’m Hsiang-Ting.</p>
             <p>I ask questions, untangle problems,<br />and make things easier to use.</p>
@@ -135,9 +154,9 @@ export default function HorizonTest() {
         </div>
         <div className={styles.surface}>
           <div data-horizon className={styles.horizon}>
-            <svg viewBox="0 0 1400 230" preserveAspectRatio="none" role="img" aria-label="Product Designer">
+            <svg viewBox={`0 0 1400 ${horizonViewHeight}`} preserveAspectRatio="xMidYMin meet" role="img" aria-label="Product Designer">
               <defs><path ref={letterPath} id="horizon-letter-path" d={curve(0, -24)} /><clipPath id="brush-reveal"><rect className={styles.reveal} x="-100" y="-100" width="1600" height="430" /></clipPath></defs>
-              <path ref={cap} className={styles.cap} d={`${curve(0)} L 1500 230 L -100 230 Z`} />
+              <path ref={cap} className={styles.cap} d={`${curve(0)} L 1500 2000 L -100 2000 Z`} />
               <path ref={ink} className={styles.line} clipPath="url(#brush-reveal)" d={brush(0)} />
               <text className={styles.letters} textAnchor="middle" onMouseLeave={() => setPlayful(false)}><textPath href="#horizon-letter-path" startOffset="50%">{'Product Designer'.split('').map((letter, i) => <tspan key={i} ref={i === 8 ? designerD : undefined} onMouseEnter={i === 8 ? () => setPlayful(true) : undefined} rotate={i === 8 ? (playful ? -22 : -5) : 0} dx={i === 9 && playful ? 12 : undefined} className={i === 8 ? styles.special : ''} style={{ '--letter': i, fontSize: i === 8 && playful ? '62px' : undefined } as CSSProperties}>{letter}</tspan>)}</textPath></text>
               <g ref={flower} className={styles.flower} aria-hidden="true" data-open={playful}>
