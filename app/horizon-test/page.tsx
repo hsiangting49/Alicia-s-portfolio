@@ -6,15 +6,15 @@ import styles from './test.module.css';
 import PortfolioNavigation from '../portfolio-navigation';
 
 const clamp = (v: number) => Math.max(0, Math.min(1, v));
-function curve(p: number, offset = 0) {
+function curve(p: number, offset = 0, width = 1400) {
   const bend = 1 - clamp((p - .55) / .45);
-  return `M -100 ${220 * bend + offset} Q 700 ${-55 * bend + offset} 1500 ${220 * bend + offset}`;
+  return `M -100 ${220 * bend + offset} Q ${width / 2} ${-55 * bend + offset} ${width + 100} ${220 * bend + offset}`;
 }
-function brush(p: number) {
+function brush(p: number, viewportWidth = 1400) {
   const bend = 1 - clamp((p - .55) / .45);
   const points = Array.from({ length: 101 }, (_, i) => {
     const t = i / 100;
-    const x = -100 + t * 1600;
+    const x = -100 + t * (viewportWidth + 200);
     const y = (220 * (1 - t) ** 2 - 110 * t * (1 - t) + 220 * t ** 2) * bend;
     const width = 1.8 + .6 * Math.sin(t * 29) + .3 * Math.sin(t * 127);
     return { x, y, width };
@@ -42,7 +42,6 @@ export default function HorizonTest() {
   const [profileAnimated, setProfileAnimated] = useState(false);
   const [profileVisible, setProfileVisible] = useState(true);
   const [profileEntered, setProfileEntered] = useState(false);
-  const [horizonViewHeight, setHorizonViewHeight] = useState(230);
   const [activeSection, setActiveSection] = useState('home');
   const cap = useRef<SVGPathElement>(null);
   const ink = useRef<SVGPathElement>(null);
@@ -81,7 +80,11 @@ export default function HorizonTest() {
       if (!node || !stage.current) return;
       const work = stage.current.querySelector<HTMLElement>('[data-work]');
       const horizonSvg = stage.current.querySelector<SVGSVGElement>('[data-horizon] svg');
-      if (horizonSvg) setHorizonViewHeight(1400 * 180 / Math.max(1, horizonSvg.getBoundingClientRect().width));
+      // Keep one SVG unit equal to one CSS pixel at every screen width.
+      // Only the curve's horizontal span changes; type and vertical spacing stay stable.
+      const horizonWidth = Math.max(1, horizonSvg?.getBoundingClientRect().width ?? 1400);
+      horizonSvg?.setAttribute('viewBox', `0 0 ${horizonWidth} 230`);
+      horizonSvg?.style.setProperty('--horizon-width', `${horizonWidth + 200}px`);
       const stageHeight = Math.max(innerHeight, (work?.offsetHeight ?? 0) + 110);
       node.style.setProperty('--stage-height', `${stageHeight}px`);
       const p = clamp(-node.getBoundingClientRect().top / Math.max(1, innerHeight * .8));
@@ -92,9 +95,9 @@ export default function HorizonTest() {
       setActiveSection(contactTop <= readingLine || (scrollY > innerHeight && scrollY + innerHeight >= document.documentElement.scrollHeight - 4) ? 'contact' : aboutTop <= readingLine ? 'about' : p >= .65 ? 'work' : 'home');
       stage.current.style.setProperty('--progress', String(p));
       stage.current.style.setProperty('--label-opacity', String(1 - clamp((p - .32) / .25)));
-      cap.current?.setAttribute('d', `${curve(p)} L 1500 2000 L -100 2000 Z`);
-      ink.current?.setAttribute('d', brush(p));
-      letterPath.current?.setAttribute('d', curve(p, -24));
+      cap.current?.setAttribute('d', `${curve(p, 0, horizonWidth)} L ${horizonWidth + 100} 2000 L -100 2000 Z`);
+      ink.current?.setAttribute('d', brush(p, horizonWidth));
+      letterPath.current?.setAttribute('d', curve(p, -24, horizonWidth));
       placeFlower();
       stage.current.dataset.moving = String(p > .01);
       stage.current.querySelector<HTMLElement>('[data-hero]')?.toggleAttribute('inert', !media.matches && p > .65);
@@ -154,7 +157,7 @@ export default function HorizonTest() {
         </div>
         <div className={styles.surface}>
           <div data-horizon className={styles.horizon}>
-            <svg viewBox={`0 0 1400 ${horizonViewHeight}`} preserveAspectRatio="xMidYMin meet" role="img" aria-label="Product Designer">
+            <svg viewBox="0 0 1400 230" preserveAspectRatio="xMidYMin meet" role="img" aria-label="Product Designer">
               <defs><path ref={letterPath} id="horizon-letter-path" d={curve(0, -24)} /><clipPath id="brush-reveal"><rect className={styles.reveal} x="-100" y="-100" width="1600" height="430" /></clipPath></defs>
               <path ref={cap} className={styles.cap} d={`${curve(0)} L 1500 2000 L -100 2000 Z`} />
               <path ref={ink} className={styles.line} clipPath="url(#brush-reveal)" d={brush(0)} />
